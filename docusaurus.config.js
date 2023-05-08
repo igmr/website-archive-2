@@ -69,6 +69,22 @@ const config = {
         },
         items: [
           {
+            type: "dropdown",
+            label: "Finanzas",
+            position: "left",
+            items: [
+              {
+                label: "Introducción",
+                href: "/introduction-finza",
+              },
+              {
+                type: "docSidebar",
+                label: "Base de datos",
+                sidebarId: "databaseFinzaSidebar",
+              },
+            ],
+          },
+          {
             href: "https://github.com/igmr/website",
             label: "GitHub",
             position: "right",

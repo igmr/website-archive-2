@@ -1,0 +1,91 @@
+---
+sidebar_position: 11
+sidebar_label: Transacciones
+title: Tabla de transacción
+tags:
+  - transacción
+  - Base de datos
+  - Aplicación web de finanzas personales
+---
+
+import Relationship from "@site/src/components/Database/RelationshipFeature";
+import Field from "@site/src/components/Database/FieldFeature";
+import Index from "@site/src/components/Database/IndexFeature";
+import Title from "@site/src/components/Database/TitleTableFeature";
+
+<Title nameTable="transactions" />
+
+Las transacciones, representan los movimientos entre cuentas.
+
+## Columnas
+
+<Field field="id" types="INT" isUnique isPrimaryKey comments="Clave primario" />
+
+<Field field="egress_id" types="INT" isForeignKey comments="Clave foráneo" />
+
+<Field field="ingress_id" types="INT" isForeignKey comments="Clave foráneo" />
+
+<Field field="user_id" types="INT" isForeignKey comments="Clave foráneo" />
+
+<Field field="quantity" types="DOUBLE" comments="Cantidad de transacción." />
+
+<Field
+  field="observation"
+  types="VARCHAR(255)"
+  comments="Observaciones de la operación."
+/>
+
+<Field
+  field="created_date"
+  types="TIMESTAMP"
+  comments="Información de auditoria, Fecha de creación del registro."
+/>
+
+<Field
+  field="updated_date"
+  isNull
+  types="TIMESTAMP"
+  comments="Información de auditoria, Fecha de actualización del registro."
+/>
+
+<Field
+  field="deleted_date"
+  isNull
+  types="TIMESTAMP"
+  comments="Información de auditoria, Fecha de eliminación del registro."
+/>
+
+## Indexes
+
+<Index indexName="pkTransaction" isPrimaryKey />
+
+<Index indexName="ukTransaction" isUnique />
+
+## Relaciones
+
+<Relationship
+  table="transactions"
+  cardinality="➡1:N➡"
+  foreign="users"
+  constraint=""
+  relationship="1:N"
+  field_id="id"
+/>
+
+<Relationship
+  table="transactions"
+  cardinality="➡1:N➡"
+  foreign="ingresses"
+  constraint="fkTransactionIngress"
+  relationship="1:N"
+  field_id="id"
+/>
+
+<Relationship
+  table="transactions"
+  cardinality="➡1:N➡"
+  foreign="egresses"
+  constraint="fkTransactionEgress"
+  relationship="1:N"
+  field_id="id"
+/>
