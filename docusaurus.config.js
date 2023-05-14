@@ -34,9 +34,15 @@ const config = {
 
   presets: [
     [
-      "classic",
+      "docusaurus-preset-openapi",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
+        api: {
+          // id: 'cars', // omitted => default instance
+          path: "docs/finza/api.yaml",
+          routeBasePath: "docs/finza/api",
+          // ... other options
+        },
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
@@ -82,6 +88,7 @@ const config = {
                 label: "Base de datos",
                 sidebarId: "databaseFinzaSidebar",
               },
+              { to:"docs/finza/api", label:"Api REST"}
             ],
           },
           {
