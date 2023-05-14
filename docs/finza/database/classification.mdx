@@ -1,10 +1,9 @@
 ---
-sidebar_position: 2
-sidebar_label: Cuenta
-title: Tabla de cuentas
+sidebar_position: 8
+sidebar_label: Tabla de clasificación
+title: Tabla de clasificaciones
 tags:
-  - Cuenta
-  - Tabla
+  - clasificaciones
   - Base de datos
   - Aplicación web de finanzas personales
 ---
@@ -13,10 +12,11 @@ import Relationship from "@site/src/components/Database/RelationshipFeature";
 import Field from "@site/src/components/Database/FieldFeature";
 import Index from "@site/src/components/Database/IndexFeature";
 import Title from "@site/src/components/Database/TitleTableFeature";
+import SpanYellow from "@site/src/components/Html/SpanYellow";
 
-<Title nameTable="accounts"/>
+<Title nameTable="classifications" />
 
-Una cuenta representa un deposito de dinero.
+Una clasificación permitirá poder identificar las operaciones de ingreso.
 
 ## Columnas
 
@@ -28,7 +28,7 @@ Una cuenta representa un deposito de dinero.
   field="description"
   types="VARCHAR(255)"
   isUnique
-  comments="Nombre de la cuenta."
+  comments="Nombre de la clasificación."
 />
 
 <Field
@@ -53,14 +53,14 @@ Una cuenta representa un deposito de dinero.
 
 ## Indexes
 
-<Index indexName="pkAccount" isPrimaryKey />
+<Index indexName="pkClassification" isPrimaryKey />
 
-<Index indexName="ukAccount" isUnique fieldName="description" />
+<Index indexName="ukClassification" isUnique fieldName="description" />
 
 ## Relaciones
 
 <Relationship
-  table="accounts"
+  table="classifications"
   cardinality="➡1:N➡"
   foreign="users"
   constraint=""
@@ -69,10 +69,10 @@ Una cuenta representa un deposito de dinero.
 />
 
 <Relationship
-  table="accounts"
+  table="classifications"
   cardinality="〰1:1〰"
-  foreign="subaccounts"
+  foreign="ingresses"
   constraint=""
   relationship="1:1"
-  field_id="account_id"
+  field_id="category_id"
 />

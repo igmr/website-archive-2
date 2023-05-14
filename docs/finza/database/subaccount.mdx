@@ -1,9 +1,9 @@
 ---
-sidebar_position: 4
-sidebar_label: Categoría
-title: Tabla de categorías
+sidebar_position: 5
+sidebar_label: Tabla de subcuenta
+title: Tabla de subcuenta
 tags:
-  - categoría
+  - subcuenta
   - Base de datos
   - Aplicación web de finanzas personales
 ---
@@ -12,19 +12,16 @@ import Relationship from "@site/src/components/Database/RelationshipFeature";
 import Field from "@site/src/components/Database/FieldFeature";
 import Index from "@site/src/components/Database/IndexFeature";
 import Title from "@site/src/components/Database/TitleTableFeature";
-import SpanYellow from "@site/src/components/Html/SpanYellow";
 
-<Title nameTable="categories" />
+<Title nameTable="subaccounts" />
 
-Las <SpanYellow>categorías</SpanYellow> representa de
-forma <SpanYellow>general</SpanYellow>, una manera
-de <SpanYellow>clasificar</SpanYellow> las
-diferentes <SpanYellow>operaciones</SpanYellow> de
-tipo <SpanYellow>egreso</SpanYellow>.
+Representa un clasificación más especifica, que forma parte de una cuenta principal.
 
 ## Columnas
 
 <Field field="id" types="INT" isUnique isPrimaryKey comments="Clave primario" />
+
+<Field field="account_id" types="INT" isForeignKey comments="Clave foráneo" />
 
 <Field field="user_id" types="INT" isForeignKey comments="Clave foráneo" />
 
@@ -32,7 +29,7 @@ tipo <SpanYellow>egreso</SpanYellow>.
   field="description"
   types="VARCHAR(255)"
   isUnique
-  comments="Nombre de la categoría."
+  comments="Nombre de la subcuenta."
 />
 
 <Field
@@ -57,14 +54,14 @@ tipo <SpanYellow>egreso</SpanYellow>.
 
 ## Indexes
 
-<Index indexName="pkCategory" isPrimaryKey />
+<Index indexName="pkSubaccount" isPrimaryKey />
 
-<Index indexName="ukCategory" isUnique fieldName="description" />
+<Index indexName="ukSubaccount" isUnique fieldName="description" />
 
 ## Relaciones
 
 <Relationship
-  table="categories"
+  table="subaccounts"
   cardinality="➡1:N➡"
   foreign="users"
   constraint=""
@@ -73,10 +70,28 @@ tipo <SpanYellow>egreso</SpanYellow>.
 />
 
 <Relationship
-  table="categories"
+  table="subaccounts"
   cardinality="〰1:1〰"
-  foreign="subcategories"
+  foreign="ingresses"
   constraint=""
   relationship="1:1"
-  field_id="category_id"
+  field_id="subaccount_id"
+/>
+
+<Relationship
+  table="subaccounts"
+  cardinality="〰1:1〰"
+  foreign="egresses"
+  constraint=""
+  relationship="1:1"
+  field_id="subaccount_id"
+/>
+
+<Relationship
+  table="subaccounts"
+  cardinality="➡1:N➡"
+  foreign="accounts"
+  constraint="fkSubaccountAccount"
+  relationship="1:N"
+  field_id="id"
 />

@@ -1,34 +1,43 @@
 ---
-sidebar_position: 6
-sidebar_label: Clasificación
-title: Tabla de clasificaciones
+sidebar_position: 10
+sidebar_label: Tabla detalle de ahorro
+title: Tabla detalle de ahorro
 tags:
-  - clasificaciones
+  - detalle de ahorro
   - Base de datos
   - Aplicación web de finanzas personales
 ---
 
+import SpanGreen from "@site/src/components/Html/SpanGreen";
 import Relationship from "@site/src/components/Database/RelationshipFeature";
 import Field from "@site/src/components/Database/FieldFeature";
 import Index from "@site/src/components/Database/IndexFeature";
 import Title from "@site/src/components/Database/TitleTableFeature";
-import SpanYellow from "@site/src/components/Html/SpanYellow";
 
-<Title nameTable="classifications" />
+<Title nameTable="savings_details" />
 
-Una clasificación permitirá poder identificar las operaciones de ingreso.
+Esta tabla detalla los movimientos realizados para un ahorro en especifico.
 
 ## Columnas
 
 <Field field="id" types="INT" isUnique isPrimaryKey comments="Clave primario" />
 
+<Field field="egress_id" types="INT" isForeignKey comments="Clave foráneo" />
+
+<Field field="saving_id" types="INT" isForeignKey comments="Clave foráneo" />
+
 <Field field="user_id" types="INT" isForeignKey comments="Clave foráneo" />
 
 <Field
-  field="description"
+  field="quantity"
+  types="double"
+  comments="Cantidad de aporte al ahorro."
+/>
+
+<Field
+  field="observation"
   types="VARCHAR(255)"
-  isUnique
-  comments="Nombre de la clasificación."
+  comments="Observaciones de la operación."
 />
 
 <Field
@@ -53,14 +62,14 @@ Una clasificación permitirá poder identificar las operaciones de ingreso.
 
 ## Indexes
 
-<Index indexName="pkClassification" isPrimaryKey />
+<Index indexName="pkSaving" isPrimaryKey />
 
-<Index indexName="ukClassification" isUnique fieldName="description" />
+<Index indexName="ukSaving" isUnique />
 
 ## Relaciones
 
 <Relationship
-  table="classifications"
+  table="savings_details"
   cardinality="➡1:N➡"
   foreign="users"
   constraint=""
@@ -69,10 +78,19 @@ Una clasificación permitirá poder identificar las operaciones de ingreso.
 />
 
 <Relationship
-  table="classifications"
-  cardinality="〰1:1〰"
-  foreign="ingresses"
-  constraint=""
-  relationship="1:1"
-  field_id="category_id"
+  table="savings_details"
+  cardinality="➡1:N➡"
+  foreign="egresses"
+  constraint="fkSavingDetailEgress"
+  relationship="1:N"
+  field_id="id"
+/>
+
+<Relationship
+  table="savings_details"
+  cardinality="➡1:N➡"
+  foreign="saving"
+  constraint="fkSavingDetailSaving"
+  relationship="1:N"
+  field_id="id"
 />
